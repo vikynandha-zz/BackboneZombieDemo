@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Zombies! Run!!</title>
+        <link rel="stylesheet" href="lib/bootstrap.min.css">
+    </head>
+    <body style="padding-top:80px;">
+        <script src="lib/jquery-2.0.3.js"></script>
+        <script src="lib/underscore.js"></script>
+        <script src="lib/backbone.js"></script>
+
+        <script type="text/template" id="jst-profile">
+            <p>Name: <%= name %></p>
+            <a class="btn btn-primary" href="#" id="js-change-name">Change name</a>
+        </script>
+
+        <script src="zombies.js"></script>
+
+        <header class="navbar navbar-fixed-top navbar-default">
+            <div class="container">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="">Home</a></li>
+                    <li><a href="#profile">Account</a></li>
+                    <li><a href="#settings">Settings</a></li>
+                </ul>
+            </div>
+        </header>
+
+        <div id="page" class="container"></div>
+
+        <script>
+            app = window.app || {};
+            app.view = new AppView();
+        </script>
+
+    </body>
+</html>
