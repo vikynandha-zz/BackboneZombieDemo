@@ -13,6 +13,10 @@ var ProfileView = Backbone.View.extend({
 
     template: _.template( $( '#jst-profile' ).html() ),
 
+    events: {
+        'click #js-change-name': 'promptNewName'
+    },
+
     initialize: function() {
         this.model.on( 'change:name', this.showNameChanged, this );
     },
@@ -26,6 +30,16 @@ var ProfileView = Backbone.View.extend({
         this.render();
         alert( 'Name changed to ' + this.model.get( 'name' ) + '\n' +
                'Triggered by ' + this.cid );
+    },
+
+    promptNewName: function(e) {
+        e.preventDefault();
+        var new_name = window.prompt( 'Enter the new name:' );
+        if ( new_name ) {
+            app.user.set({
+                name: new_name
+            });
+        }
     }
 
 });
@@ -34,8 +48,8 @@ var ProfileView = Backbone.View.extend({
 var AppRouter = Backbone.Router.extend({
 
     routes: {
-        profile : 'profile',
-        settings: 'settings',
+        account : 'account',
+        notifications: 'notifications',
         '': 'home'
     },
 
@@ -44,16 +58,16 @@ var AppRouter = Backbone.Router.extend({
         $( '#page' ).html( '<h1>Zombies!</h1>' );
     },
 
-    profile: function() {
+    account: function() {
         this.updateNav();
         $( '#page' ).html( new ProfileView({
             model: app.user
         }).render().$el );
     },
 
-    settings: function() {
+    notifications: function() {
         this.updateNav();
-        $( '#page' ).html( 'Settings' );
+        $( '#page' ).html( '<h2>You do not have any new notifications.</h2>' );
     },
 
     updateNav: function() {
@@ -69,22 +83,10 @@ var AppView = Backbone.View.extend({
 
     el: $('body'),
 
-    events: {
-        'click #js-change-name': 'promptNewName'
-    },
-
     initialize: function() {
         app.user = new User({ name: 'viky' });
         app.router = new AppRouter();
         Backbone.history.start();
-    },
-
-    promptNewName: function(e) {
-        e.preventDefault();
-        var new_name = window.prompt( 'Enter the new name:' );
-        app.user.set({
-            name: new_name
-        });
     }
 
 });
